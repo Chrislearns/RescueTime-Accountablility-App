@@ -9,7 +9,7 @@ class Hello extends React.Component {
   this.state = {
    error: null,
    isLoaded:false,
-   items: null
+   items: []
   };
  }
 
@@ -18,9 +18,11 @@ class Hello extends React.Component {
   .then(response => response.json())
   .then(
        (data) => {
+            
         this.setState({
          isLoaded:true,
-         items:data.items
+         items:data
+         
         })
         console.log(data);
        },
@@ -43,11 +45,20 @@ class Hello extends React.Component {
   } else if (!isLoaded) {
    return <div>Loading...</div>
 
-  }else { return (
-   <p>{items}</p>
+  }else { 
+   return (
+     <ul>
+          {items.map(item => (
+               <li key={item.id}>
+                    {item.total_hours}
+               </li>
+          ))
+          }
+     </ul> 
   );
   }
  }
 }
+
 
 ReactDOM.render(<Hello />, document.getElementById('root'));
